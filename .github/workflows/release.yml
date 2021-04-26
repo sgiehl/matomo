@@ -20,7 +20,7 @@ jobs:
           if git tag --list $version
           then
             echo "A tag for $version already exists."
-            exit 0
+            exit 1
           fi
           
           echo "Creating a tag for $version"
