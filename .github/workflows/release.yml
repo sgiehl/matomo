@@ -33,6 +33,7 @@ jobs:
           fi;
                   
           echo ::set-output name=version::$version
+      shell: bash 
     - uses: ncipollo/release-action@v1
       with:
         tag: ${{ steps.tag.outputs.version }}
