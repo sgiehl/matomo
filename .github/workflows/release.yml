@@ -17,7 +17,7 @@ jobs:
       run: |
           version=$( cat core/Version.php | grep -oP "VERSION = '\K([^\']+)" )
           
-          if git tag --list $version
+          if [[ $( git tag --list $version ) -eq $version ]]
           then
             echo "A tag for $version already exists."
             exit 1
