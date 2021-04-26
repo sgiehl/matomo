@@ -15,7 +15,7 @@ jobs:
     - name: Check preconditions and create tag
       id: tag
       run: |
-          version=( cat core/Version.php | grep -oP "VERSION = '\K([^\']+)" )
+          version=$( cat core/Version.php | grep -oP "VERSION = '\K([^\']+)" )
           
           if git tag --list $version
           then
