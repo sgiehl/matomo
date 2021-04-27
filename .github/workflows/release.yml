@@ -10,7 +10,7 @@ jobs:
     steps:
     - name: "Check if user is in group"
       run: |
-          MEMBER=$( curl \
+          MEMBER=$( curl -s \
                  --request GET \
                  --header 'authorization: Bearer ${{ secrets.GITTOKEN }}' \
                  --header 'content-type: application/json' \
@@ -30,8 +30,9 @@ jobs:
       id: tag
       run: |
           version=$( cat core/Version.php | grep -oP "VERSION = '\K([^\']+)" )
+          tag_exisits=$( git tag --list "$version" )
           
-          if [[ $( git tag --list "$version" ) -eq "$version" ]]
+          if [[ $tag_exisits -eq "$version" ]]
           then
             echo "A tag for $version already exists."
             exit 1
