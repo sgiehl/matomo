@@ -10,7 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        ref: '4.x-dev'
         lfs: false
     - name: Check preconditions and create tag
       id: tag
@@ -25,17 +24,25 @@ jobs:
           
           echo "Creating a tag for $version"
           
+          git tag $version
+          git push origin tags/$version
+          
           if [[ "$version" =~ "-" ]]
           then
             echo ::set-output name=prerelease::true
           else
             echo ::set-output name=prerelease::false
           fi;
-                  
+          
+          git clone https://github.com/matomo-org/matomo-package.git matomo-package
+          cd matomo-package
+          ./scripts/build-package.sh $version
+                    
           echo ::set-output name=version::$version
       shell: bash 
     - uses: ncipollo/release-action@v1
       with:
         tag: ${{ steps.tag.outputs.version }}
+        body: ""
         prerelease: ${{ steps.tag.outputs.prerelease }}
         token: ${{ secrets.GITHUB_TOKEN }}        
