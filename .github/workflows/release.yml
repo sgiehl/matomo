@@ -10,13 +10,14 @@ jobs:
     steps:
     - name: "Check if user is in group"
       run: |
-          MEMBER=$ ( curl \
+          MEMBER=$( curl \
                  --request GET \
                  --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
                  --header 'content-type: application/json' \
                  --url https://api.github.com/orgs/matomo-org/teams/core-team/members \
                  | jq '.[] | select(.login == ${{ github.actor }}) )
-          if [ -z "$MEMBER" ]
+          
+          if [[ -z "$MEMBER" ]]
           then
            echo "Action was not triggered by a member with release permission"
            exit 1;
