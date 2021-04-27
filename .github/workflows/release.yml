@@ -8,12 +8,20 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-    - name: "Check if user has write access"
-      uses: "lannonbr/repo-permission-check-action@2.0.0"
-      with:
-        permission: "admin"
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: "Check if user is in group"
+      run: |
+          MEMBER=$ ( curl \
+                 --request GET \
+                 --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+                 --header 'content-type: application/json' \
+                 --url https://api.github.com/orgs/matomo-org/teams/core-team/members \
+                 | jq '.[] | select(.login == ${{ github.actor }}) )
+          if [ -z "$MEMBER" ]
+          then
+           echo "Action was not triggered by a member with release permission"
+           exit 1;
+          fi
+      shell: bash
     - uses: actions/checkout@v2
       with:
         lfs: false
