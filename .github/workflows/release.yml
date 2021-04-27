@@ -32,7 +32,7 @@ jobs:
           version=$( cat core/Version.php | grep -oP "VERSION = '\K([^\']+)" )
           tag_exisits=$( git tag --list "$version" )
           
-          if [[ "$tag_exisits" -eq "$version" ]]
+          if [ "$tag_exisits" -eq "$version" ]
           then
             echo "A tag for $version already exists."
             exit 1
@@ -48,7 +48,7 @@ jobs:
             echo ::set-output name=prerelease::true
           else
             echo ::set-output name=prerelease::false
-          fi;
+          fi
           
           git clone https://github.com/matomo-org/matomo-package.git matomo-package
           cd matomo-package
