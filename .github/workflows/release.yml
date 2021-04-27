@@ -12,7 +12,7 @@ jobs:
       run: |
           MEMBER=$( curl \
                  --request GET \
-                 --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+                 --header 'authorization: Bearer ${{ secrets.GITTOKEN }}' \
                  --header 'content-type: application/json' \
                  --url https://api.github.com/orgs/matomo-org/teams/core-team/members \
                  | jq '.[] | select(.login == "${{ github.actor }}")' )
