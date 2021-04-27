@@ -15,7 +15,7 @@ jobs:
                  --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
                  --header 'content-type: application/json' \
                  --url https://api.github.com/orgs/matomo-org/teams/core-team/members \
-                 | jq '.[] | select(.login == ${{ github.actor }}) )
+                 | jq '.[] | select(.login == "${{ github.actor }}")' )
           
           if [[ -z "$MEMBER" ]]
           then
