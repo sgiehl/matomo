@@ -8,6 +8,12 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
+    - name: "Check if user has write access"
+      uses: "lannonbr/repo-permission-check-action@2.0.0"
+      with:
+        permission: "admin"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - uses: actions/checkout@v2
       with:
         lfs: false
