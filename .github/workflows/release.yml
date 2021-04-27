@@ -42,7 +42,8 @@ jobs:
       shell: bash 
     - uses: ncipollo/release-action@v1
       with:
+        artifacts: "matomo-package/archives/matomo.*"
         tag: ${{ steps.tag.outputs.version }}
-        body: ""
+        body: "artifacts"
         prerelease: ${{ steps.tag.outputs.prerelease }}
         token: ${{ secrets.GITHUB_TOKEN }}        
