@@ -36,7 +36,7 @@ jobs:
           
           git clone https://github.com/matomo-org/matomo-package.git matomo-package
           cd matomo-package
-          ./scripts/build-package.sh $version
+          ./scripts/build-package.sh $version matomo true
                     
           echo ::set-output name=version::$version
       shell: bash 
