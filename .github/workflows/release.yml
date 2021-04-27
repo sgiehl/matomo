@@ -42,7 +42,7 @@ jobs:
       shell: bash 
     - uses: ncipollo/release-action@v1
       with:
-        artifacts: "matomo-package/archives/matomo.*"
+        artifacts: "matomo-package/archives/matomo-${{ steps.tag.outputs.version }}.*"
         tag: ${{ steps.tag.outputs.version }}
         body: "artifacts"
         prerelease: ${{ steps.tag.outputs.prerelease }}
