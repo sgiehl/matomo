@@ -33,7 +33,7 @@ jobs:
           
           echo "Version to build: '$version'"
           
-          git fetch origin "$version" || true
+          git fetch --tags -q 2>/dev/null
           tag_exists=$( git tag --list "$version" )
           
           if [[ -n "$tag_exists" ]]
