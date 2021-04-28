@@ -30,11 +30,16 @@ jobs:
       id: tag
       run: |
           version=$( cat core/Version.php | grep -oP "VERSION = '\K([^\']+)" )
-          tag_exisits=$( git tag --list "$version" )
           
-          if [[ -n "$tag_exisits" ]]
+          echo "Version to build: '$version'"
+          
+          tag_exists=$( git tag --list "$version" )
+          
+          echo "-$tag_exists-"
+
+          if [[ -n "$tag_exists" ]]
           then
-            echo "A tag for $tag_exisits already exists."
+            echo "A tag for $tag_exists already exists."
             exit 1
           fi
           
