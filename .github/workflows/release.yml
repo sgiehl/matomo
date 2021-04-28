@@ -32,7 +32,7 @@ jobs:
           version=$( cat core/Version.php | grep -oP "VERSION = '\K([^\']+)" )
           tag_exisits=$( git tag --list "$version" )
           
-          if [ -n "$tag_exisits" ]
+          if [[ -n "$tag_exisits" ]]
           then
             echo "A tag for $tag_exisits already exists."
             exit 1
