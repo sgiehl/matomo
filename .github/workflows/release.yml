@@ -35,7 +35,7 @@ jobs:
       run: |
           if [[ -n "${{ github.event.inputs.version }}" ]]
           then
-            version="${{ github.event.inputs.name }}"
+            version="${{ github.event.inputs.version }}"
             echo "Version to re-build: '$version'"
             
             git fetch --tags -q 2>/dev/null
