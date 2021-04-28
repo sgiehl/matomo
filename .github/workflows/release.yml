@@ -2,8 +2,12 @@
 name: Build release
 
 on:
-  workflow_dispatch
-
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to build'
+        required: false
+        default: ''
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -29,23 +33,37 @@ jobs:
     - name: Check preconditions and create tag
       id: tag
       run: |
-          version=$( cat core/Version.php | grep -oP "VERSION = '\K([^\']+)" )
-          
-          echo "Version to build: '$version'"
-          
-          git fetch --tags -q 2>/dev/null
-          tag_exists=$( git tag --list "$version" )
-          
-          if [[ -n "$tag_exists" ]]
+          if [[ -n "${{ github.event.inputs.version }}" ]]
           then
-            echo "A tag for $tag_exists already exists."
-            exit 1
+            version="${{ github.event.inputs.name }}"
+            echo "Version to re-build: '$version'"
+            
+            git fetch --tags -q 2>/dev/null
+            tag_exists=$( git tag --list "$version" )
+          
+            if [[ -z "$tag_exists" ]]
+            then
+              echo "A tag for $version does not exist."
+              exit 1
+            fi
+          else
+            version=$( cat core/Version.php | grep -oP "VERSION = '\K([^\']+)" )
+            echo "Version to build: '$version'"
+          
+            git fetch --tags -q 2>/dev/null
+            tag_exists=$( git tag --list "$version" )
+          
+            if [[ -n "$tag_exists" ]]
+            then
+              echo "A tag for $tag_exists already exists."
+              exit 1
+            fi
+          
+            echo "Creating a tag for $version"
+          
+            git tag $version
+            git push origin tags/$version
           fi
-          
-          echo "Creating a tag for $version"
-          
-          git tag $version
-          git push origin tags/$version
           
           if [[ "$version" =~ "-" ]]
           then
