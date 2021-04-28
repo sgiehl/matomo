@@ -46,6 +46,8 @@ jobs:
               echo "A tag for $version does not exist."
               exit 1
             fi
+            
+            echo ::set-output name=update::true
           else
             version=$( cat core/Version.php | grep -oP "VERSION = '\K([^\']+)" )
             echo "Version to build: '$version'"
@@ -63,6 +65,8 @@ jobs:
           
             git tag $version
             git push origin tags/$version
+            
+            echo ::set-output name=update::false
           fi
           
           if [[ "$version" =~ "-" ]]
@@ -81,6 +85,7 @@ jobs:
     - uses: ncipollo/release-action@v1
       with:
         artifacts: "matomo-package/archives/matomo-${{ steps.tag.outputs.version }}.*"
+        allowUpdates: ${{ steps.tag.outputs.update }}
         tag: ${{ steps.tag.outputs.version }}
         body: "artifacts"
         prerelease: ${{ steps.tag.outputs.prerelease }}
