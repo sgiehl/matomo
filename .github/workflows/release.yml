@@ -33,11 +33,9 @@ jobs:
           
           echo "Version to build: '$version'"
           
-          git fetch --all --tags
+          git fetch --tags
           tag_exists=$( git tag --list "$version" )
           
-          echo "-$tag_exists-"
-
           if [[ -n "$tag_exists" ]]
           then
             echo "A tag for $tag_exists already exists."
