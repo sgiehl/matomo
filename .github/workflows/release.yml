@@ -33,6 +33,7 @@ jobs:
           
           echo "Version to build: '$version'"
           
+          git fetch --all --tags
           tag_exists=$( git tag --list "$version" )
           
           echo "-$tag_exists-"
