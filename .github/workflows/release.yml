@@ -76,6 +76,7 @@ jobs:
             echo ::set-output name=prerelease::false
           fi
           
+          mkdir ~/.gnupg
           echo "pinentry-mode loopback" > ~/.gnupg/gpg.conf
           
           echo "${{ secrets.CERTIFICATE }}" > certificate.asc
