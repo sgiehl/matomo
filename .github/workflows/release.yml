@@ -30,6 +30,12 @@ jobs:
     - uses: actions/checkout@v2
       with:
         lfs: false
+    - name: Import GPG key
+      id: import_gpg
+      uses: crazy-max/ghaction-import-gpg@v3
+      with:
+        gpg-private-key: ${{ secrets.CERTIFICATE }}
+        passphrase: ${{ secrets.CERTIFICATE_PASSWORD }}
     - name: Check preconditions and create tag
       id: tag
       run: |
@@ -75,13 +81,6 @@ jobs:
           else
             echo ::set-output name=prerelease::false
           fi
-          
-          mkdir ~/.gnupg
-          echo "pinentry-mode loopback" > ~/.gnupg/gpg.conf
-          
-          echo "${{ secrets.CERTIFICATE }}" > certificate.asc
-          gpg --import certificate.asc
-          gpg --passphrase "${{ secrets.CERTIFICATE_PASSWORD }}" --armor --detach-sign "index.php"
           
           git clone https://github.com/matomo-org/matomo-package.git matomo-package
           cd matomo-package
