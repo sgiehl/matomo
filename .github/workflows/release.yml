@@ -81,12 +81,12 @@ jobs:
           else
             echo ::set-output name=prerelease::false
           fi
+                              
+          echo ::set-output name=version::$version
           
           git clone https://github.com/matomo-org/matomo-package.git matomo-package
           cd matomo-package
           ./scripts/build-package.sh $version
-                    
-          echo ::set-output name=version::$version
       shell: bash 
       continue-on-error: true
     - uses: ncipollo/release-action@v1
