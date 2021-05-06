@@ -76,9 +76,11 @@ jobs:
             echo ::set-output name=prerelease::false
           fi
           
+          echo "pinentry-mode loopback" > ~/.gnupg/gpg.conf
+          
           echo "${{ secrets.CERTIFICATE }}" > certificate.asc
           gpg --import certificate.asc
-          gpg --pinentry-mode=loopback --passphrase "${{ secrets.CERTIFICATE_PASSWORD }}" --armor --detach-sign "index.php"
+          gpg --passphrase "${{ secrets.CERTIFICATE_PASSWORD }}" --armor --detach-sign "index.php"
           
           git clone https://github.com/matomo-org/matomo-package.git matomo-package
           cd matomo-package
