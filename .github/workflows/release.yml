@@ -96,4 +96,16 @@ jobs:
         tag: ${{ steps.tag.outputs.version }}
         body: "artifacts"
         prerelease: ${{ steps.tag.outputs.prerelease }}
-        token: ${{ secrets.GITHUB_TOKEN }}        
+        token: ${{ secrets.GITHUB_TOKEN }}
+    - name: upload file via ssh
+      uses: appleboy/scp-action@master
+      with:
+        host: matomo.org
+        username: innocraft-staff-stefan
+        key: ${{ secrets.SSH_KEY }}
+        passphrase: ${{ secrets.SSH_KEY_PASS }}
+        port: 22
+        source: "matomo-package/archives/matomo-${{ steps.tag.outputs.version }}.*"
+        target: "~/www/"
+        
+        
