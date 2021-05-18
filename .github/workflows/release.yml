@@ -101,7 +101,6 @@ jobs:
           cd matomo-package
           ./scripts/build-package.sh $version
       shell: bash 
-      continue-on-error: true
     - uses: ncipollo/release-action@v1
       with:
         artifacts: "matomo-package/archives/matomo-${{ steps.tag.outputs.version }}.*"
