@@ -96,14 +96,16 @@ jobs:
             We recommend to read [this FAQ](http://matomo.org/faq/how-to-update/faq_159/) before using a pre-release in a production environment.
             
             Please use the attached archives for installing or updating Matomo.
-            The Github download is only meant for developers and it will require extra work to install it. 
+            The source code download is only meant for developers and will require extra work to install it. 
+             - Latest stable production release can be found at https://matomo.org/download/ ([learn more](https://matomo.org/docs/installation/)) (recommended)
+             - Beta and Release Candidates releases can be found at https://builds.matomo.org/ ([learn more](http://matomo.org/faq/how-to-update/faq_159/))"
             "
           else
             echo ::set-output name=prerelease::false
             body="## [Matomo ${version} Changelog](https://matomo.org/changelog/matomo-${version//./-}/)
             
             Please use the attached archives for installing or updating Matomo.
-            The Github download is only meant for developers and it will require extra work to install it. 
+            The source code download is only meant for developers and will require extra work to install it. 
              - Latest stable production release can be found at https://matomo.org/download/ ([learn more](https://matomo.org/docs/installation/)) (recommended)
              - Beta and Release Candidates releases can be found at https://builds.matomo.org/ ([learn more](http://matomo.org/faq/how-to-update/faq_159/))"
           fi
