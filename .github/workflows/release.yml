@@ -115,6 +115,6 @@ jobs:
         artifacts: "matomo-package/archives/matomo-${{ steps.tag.outputs.version }}.*"
         allowUpdates: ${{ steps.tag.outputs.update }}
         tag: ${{ steps.tag.outputs.version }}
-        body: "artifacts"
+        body: ${{ steps.tag.outputs.body }}
         prerelease: ${{ steps.tag.outputs.prerelease }}
         token: ${{ secrets.GITHUB_TOKEN }}
