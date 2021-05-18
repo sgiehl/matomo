@@ -36,8 +36,21 @@ jobs:
       with:
         gpg-private-key: ${{ secrets.CERTIFICATE }}
         passphrase: ${{ secrets.CERTIFICATE_PASSWORD }}
+    - name: Add SSH key
+      env:
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      run: |
+          mkdir -p /home/runner/.ssh
+          ssh-keyscan matomo.org >> /home/runner/.ssh/known_hosts
+          # DOKKU_SSH_KEY is the name of the repository secret
+          echo "${{ secrets.SSH_KEY }}" > /home/runner/.ssh/github_actions
+          chmod 600 /home/runner/.ssh/github_actions
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null   
+          ssh-add /home/runner/.ssh/github_actions
     - name: Check preconditions and create tag
       id: tag
+      env:
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
       run: |
           if [[ -n "${{ github.event.inputs.version }}" ]]
           then
@@ -84,7 +97,7 @@ jobs:
                               
           echo ::set-output name=version::$version
           
-          git clone https://github.com/matomo-org/matomo-package.git matomo-package
+          git clone --branch actiontest https://github.com/matomo-org/matomo-package.git matomo-package
           cd matomo-package
           ./scripts/build-package.sh $version
       shell: bash 
@@ -97,15 +110,3 @@ jobs:
         body: "artifacts"
         prerelease: ${{ steps.tag.outputs.prerelease }}
         token: ${{ secrets.GITHUB_TOKEN }}
-    - name: upload file via ssh
-      uses: appleboy/scp-action@master
-      with:
-        host: matomo.org
-        username: innocraft-staff-stefan
-        key: ${{ secrets.SSH_KEY }}
-        passphrase: ${{ secrets.SSH_KEY_PASS }}
-        port: 22
-        source: "matomo-package/archives/matomo-${{ steps.tag.outputs.version }}.*"
-        target: "~/www/"
-        
-        
