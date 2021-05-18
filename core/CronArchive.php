@@ -466,9 +466,9 @@ class CronArchive
         $cliMulti->timeRequests();
 
         $responses = $cliMulti->request($urls);
-        
+
         $this->disconnectDb();
-        
+
         $timers = $cliMulti->getTimers();
         $successCount = 0;
 
@@ -890,11 +890,28 @@ class CronArchive
             }
 
             foreach ($this->segmentArchiving->getAllSegmentsToArchive($idSite) as $segmentDefinition) {
-                $params = new Parameters(new Site($idSite), $periodObj, new Segment(urlencode($segmentDefinition), [$idSite], $periodObj->getDateStart(), $periodObj->getDateEnd()));
+                $params = new Parameters(new Site($idSite), $periodObj, new Segment($segmentDefinition, [$idSite], $periodObj->getDateStart(), $periodObj->getDateEnd()));
                 if ($this->canWeSkipInvalidatingBecauseThereIsAUsablePeriod($params, $doNotIncludeTtlInExistingArchiveCheck)) {
                     $this->logger->debug('  Found usable archive for {archive}, skipping invalidation.', ['archive' => $params]);
                 } else {
-                    $this->getApiToInvalidateArchivedReport()->invalidateArchivedReports($idSite, $date, $period, urlencode($segmentDefinition),
+                    if (empty($this->segmentArchiving)) {
+                        // might not be initialised if init is not called
+                        $this->segmentArchiving = StaticContainer::get(SegmentArchiving::class);
+                    }
+
+                    $segmentInfo = $this->segmentArchiving->findSegmentForHash($params->getSegment()->getHash(), $idSite);
+
+                    if ($segmentInfo) {
+                        $segmentArchiveStartDate = $this->segmentArchiving->getReArchiveSegmentStartDate($segmentInfo);
+
+                        if ($segmentArchiveStartDate !== null && $segmentArchiveStartDate->isLater($params->getPeriod()->getDateEnd()->getEndOfDay())) {
+                            // the system is not allowed to invalidate reports for this period
+                            // automatically, only a user can specifically invalidate
+                            continue;
+                        }
+                    }
+
+                    $this->getApiToInvalidateArchivedReport()->invalidateArchivedReports($idSite, $date, $period, $segmentDefinition,
                         $cascadeDown = false, $_forceInvalidateNonexistant);
                 }
             }

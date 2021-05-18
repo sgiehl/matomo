@@ -585,7 +585,7 @@ class Model
     }
 
     /**
-     * Get a list of IDs of archives with segments that no longer exist in the DB. Excludes temporary archives that 
+     * Get a list of IDs of archives with segments that no longer exist in the DB. Excludes temporary archives that
      * may still be in use, as specified by the $oldestToKeep passed in.
      * @param string $archiveTableName
      * @param array $segments  List of segments to match against
@@ -619,7 +619,7 @@ class Model
     private function getDeletedSegmentWhereClause(array $segment)
     {
         $idSite = (int)$segment['enable_only_idsite'];
-        $segmentHash = Segment::getSegmentHash(urlencode($segment['definition']));
+        $segmentHash = $segment['hash'];
         // Valid segment hashes are md5 strings - just confirm that it is so it's safe for SQL injection
         if (!ctype_xdigit($segmentHash)) {
             throw new Exception($segment . ' expected to be an md5 hash');
@@ -827,7 +827,7 @@ class Model
         $inProgressInvalidation = Db::fetchOne($sql, $bind);
         return $inProgressInvalidation;
     }
-  
+
     /**
      * Returns true if there is an archive that exists that can be used when aggregating an archive for $period.
      *
@@ -862,6 +862,48 @@ class Model
             $date = $date->addPeriod(1, 'month'); // move to next archive table
         }
         return false;
+    }
+
+    /**
+     * Returns true if any invalidations exists for the given
+     * $idsite and $doneFlag (name column) for the $period.
+     *
+     * @param mixed $idSite
+     * @param Period $period
+     * @param mixed $doneFlag
+     * @param mixed $report
+     * @return bool
+     * @throws Exception
+     */
+    public function hasInvalidationForPeriodAndName($idSite, Period $period, $doneFlag, $report = null)
+    {
+        $table = Common::prefixTable('archive_invalidations');
+
+        if (empty($report)) {
+            $sql = "SELECT idinvalidation FROM `$table` WHERE idsite = ? AND date1 = ? AND date2 = ? AND `period` = ? AND `name` = ?  AND `report` IS NULL LIMIT 1";
+        } else {
+            $sql = "SELECT idinvalidation FROM `$table` WHERE idsite = ? AND date1 = ? AND date2 = ? AND `period` = ? AND `name` = ? AND `report` = ? LIMIT 1";
+        }
+
+        $bind = [
+            $idSite,
+            $period->getDateStart()->toString(),
+            $period->getDateEnd()->toString(),
+            $period->getId(),
+            $doneFlag
+        ];
+
+        if (!empty($report)) {
+            $bind[] = $report;
+        }
+
+        $idInvalidation = Db::fetchOne($sql, $bind);
+
+        if (empty($idInvalidation)) {
+            return false;
+        }
+
+        return true;
     }
 
     public function deleteInvalidationsForSites(array $idSites)
