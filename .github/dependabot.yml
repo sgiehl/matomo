@@ -35,4 +35,4 @@ updates:
       interval: "weekly"
     commit-message:
       prefix: "[GitHub Actions] "
-      
+    open-pull-requests-limit: 10
