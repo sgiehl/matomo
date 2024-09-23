@@ -11,7 +11,9 @@ updates:
         dependency-type: "production"
       development-dependencies:
         dependency-type: "development"
-
+    commit-message:
+      prefix: "[composer dependencies] "
+      
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
@@ -23,8 +25,14 @@ updates:
         dependency-type: "production"
       development-dependencies:
         dependency-type: "development"
-
+    commit-message:
+      # Prefix all commit messages with "[docker] " (no colon, but a trailing whitespace)
+      prefix: "[npm dependencies] "
+      
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+    commit-message:
+      prefix: "[GitHub Actions] "
+      
