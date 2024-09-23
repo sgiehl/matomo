@@ -5,10 +5,9 @@ updates:
     schedule:
       interval: "weekly"
     labels:
-      - "dependencies"
-      
-groups:
-  production-dependencies:
-    dependency-type: "production"
-  development-dependencies:
-    dependency-type: "development"
+      - "dependencies"  
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+      development-dependencies:
+        dependency-type: "development"
