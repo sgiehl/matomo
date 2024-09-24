@@ -5,19 +5,20 @@ updates:
     schedule:
       interval: "weekly"
     labels:
-      - "dependencies"  
+      - "dependencies"
     groups:
       production:
         dependency-type: "production"
       development:
         dependency-type: "development"
     commit-message:
-      prefix: "[composer dependencies] "
+      prefix: "[Composer] "
     reviewers:
       - "sgiehl"
     pull-request-branch-name:
-      separator: "-"    
-      
+      separator: "-"
+    versioning-strategy: lockfile-only
+    
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
@@ -30,7 +31,7 @@ updates:
       development-dependencies:
         dependency-type: "development"
     commit-message:
-      prefix: "[npm dependencies] "
+      prefix: "[NPM] "
     reviewers:
       - "sgiehl"
     pull-request-branch-name:
@@ -48,7 +49,7 @@ updates:
       production-dependencies:
         dependency-type: "production"
     commit-message:
-      prefix: "[UI test dependencies] "
+      prefix: "[NPM UI Tests] "
     reviewers:
       - "sgiehl"
     pull-request-branch-name:
