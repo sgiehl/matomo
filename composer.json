@@ -24,6 +24,9 @@
         "source": "https://github.com/matomo-org/matomo"
     },
     "config": {
+        "platform": {
+            "php": "7.2.5"
+        },
         "prepend-autoloader": false,
         "sort-packages": true,
         "allow-plugins": {
