@@ -4,6 +4,7 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "sunday"
     labels:
       - "dependencies"
     groups:
@@ -23,6 +24,7 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "sunday"
     labels:
       - "dependencies"  
     groups:
@@ -59,7 +61,7 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     commit-message:
       prefix: "[GitHub Actions] "
     open-pull-requests-limit: 10
@@ -72,6 +74,7 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "sunday"
     groups:
       all-submodules:
         patterns:
