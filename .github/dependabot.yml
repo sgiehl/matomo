@@ -68,3 +68,13 @@ updates:
     pull-request-branch-name:
       separator: "-"    
      
+  - package-ecosystem: "gitsubmodule"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "[Submodules] "
+    reviewers:
+      - "sgiehl"
+    pull-request-branch-name:
+      separator: "-" 
