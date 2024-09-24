@@ -26,8 +26,20 @@ updates:
       development-dependencies:
         dependency-type: "development"
     commit-message:
-      # Prefix all commit messages with "[docker] " (no colon, but a trailing whitespace)
       prefix: "[npm dependencies] "
+      
+  - package-ecosystem: "npm"
+    directory: "/tests/libs/screenshot-testing"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"  
+      - "c: Tests & QA"
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+    commit-message:
+      prefix: "[UI test dependencies] "
       
   - package-ecosystem: "github-actions"
     directory: "/"
