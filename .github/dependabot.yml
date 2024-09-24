@@ -78,7 +78,6 @@ updates:
          - "*"
     commit-message:
       prefix: "[Submodules] "
-    open-pull-requests-limit: 10
     reviewers:
       - "sgiehl"
     pull-request-branch-name:
