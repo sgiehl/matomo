@@ -48,8 +48,9 @@ updates:
       - "dependencies"  
       - "c: Tests & QA"
     groups:
-      production-dependencies:
-        dependency-type: "production"
+      all-dependencies:
+        patterns:
+         - "*"
     commit-message:
       prefix: "[NPM UI Tests] "
     reviewers:
