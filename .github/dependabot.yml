@@ -7,9 +7,9 @@ updates:
     labels:
       - "dependencies"  
     groups:
-      production-dependencies:
+      production:
         dependency-type: "production"
-      development-dependencies:
+      development:
         dependency-type: "development"
     commit-message:
       prefix: "[composer dependencies] "
@@ -17,7 +17,6 @@ updates:
       - "sgiehl"
     pull-request-branch-name:
       separator: "-"    
-    versioning-strategy: lockfile-only
       
   - package-ecosystem: "npm"
     directory: "/"
