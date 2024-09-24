@@ -13,6 +13,11 @@ updates:
         dependency-type: "development"
     commit-message:
       prefix: "[composer dependencies] "
+    reviewers:
+      - "sgiehl"
+    pull-request-branch-name:
+      separator: "-"    
+    versioning-strategy: lockfile-only
       
   - package-ecosystem: "npm"
     directory: "/"
@@ -27,11 +32,16 @@ updates:
         dependency-type: "development"
     commit-message:
       prefix: "[npm dependencies] "
-      
+    reviewers:
+      - "sgiehl"
+    pull-request-branch-name:
+      separator: "-"    
+    versioning-strategy: lockfile-only
+           
   - package-ecosystem: "npm"
     directory: "/tests/lib/screenshot-testing"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     labels:
       - "dependencies"  
       - "c: Tests & QA"
@@ -40,7 +50,12 @@ updates:
         dependency-type: "production"
     commit-message:
       prefix: "[UI test dependencies] "
-      
+    reviewers:
+      - "sgiehl"
+    pull-request-branch-name:
+      separator: "-"    
+    versioning-strategy: lockfile-only
+           
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -48,3 +63,8 @@ updates:
     commit-message:
       prefix: "[GitHub Actions] "
     open-pull-requests-limit: 10
+    reviewers:
+      - "sgiehl"
+    pull-request-branch-name:
+      separator: "-"    
+     
