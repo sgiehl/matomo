@@ -5,16 +5,16 @@
   "author": "Matomo Team",
   "license": "GPL-3.0+",
   "dependencies": {
-    "chai": "^4.3.4",
+    "chai": "^5.1.1",
     "chai-files": "^1.4.0",
     "chai-image-assert": "^1.2.0",
-    "fs-extra": "^7.0.1",
-    "mocha": "^8.2.0",
-    "puppeteer": "^8.0.0",
+    "fs-extra": "^11.2.0",
+    "mocha": "^10.7.3",
+    "puppeteer": "^23.4.0",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
-    "url-parse": "^1.5.3",
-    "@testomatio/reporter": "^1.0.9",
+    "url-parse": "^1.5.10",
+    "@testomatio/reporter": "^1.5.1",
     "mocha-multi-reporters": "^1.5.1"
   }
 }
