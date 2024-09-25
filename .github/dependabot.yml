@@ -7,11 +7,6 @@ updates:
       day: "sunday"
     labels:
       - "dependencies"
-    groups:
-      production:
-        dependency-type: "production"
-      development:
-        dependency-type: "development"
     commit-message:
       prefix: "[Composer] "
     reviewers:
