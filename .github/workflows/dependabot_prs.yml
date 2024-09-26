@@ -1,4 +1,4 @@
-name: Handle DependaBot PRs
+name: DependaBot PRs
 
 on:
   pull_request:
@@ -49,9 +49,16 @@ jobs:
     - name: Install npm dependencies
       if: ${{ steps.dependabot-metadata.outputs.package-ecosystem == 'npm_and_yarn' && steps.dependabot-metadata.outputs.dependency-type == 'direct:production' }}
       run: npm install --omit=dev
-    - name: Push changes
+    - name: Push changes if needed
       if: ${{ steps.dependabot-metadata.outputs.package-ecosystem == 'npm_and_yarn' && steps.dependabot-metadata.outputs.dependency-type == 'direct:production' }}
       run: |
+          changes=( $(git diff node_modules) )
+
+          # abort here if no change available
+          if [[ ${#changes[@]} -eq 0 ]]
+          then
+              exit 0
+          fi
           git add ./node_modules
           git commit -m "Update npm dependencies"
           git push --set-upstream origin ${{ github.head_ref }}
