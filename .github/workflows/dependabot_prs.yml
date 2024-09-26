@@ -36,16 +36,13 @@ jobs:
       run: |
           cat <<- EOF > $HOME/.netrc
             machine github.com
-            login innocraft-automation
-            password $CUSTOM_ACCESS_TOKEN
-            machine api.github.com
-            login innocraft-automation
+            login sgiehl
             password $CUSTOM_ACCESS_TOKEN
           EOF
           chmod 600 $HOME/.netrc
 
           git config --global user.email "innocraft-automation@users.noreply.github.com"
-          git config --global user.name "innocraft-automation"
+          git config --global user.name "sgiehl"
           git remote set-url origin https://x-access-token:${{ secrets.CUSTOM_ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY
 
           git remote add upstream https://github.com/${GITHUB_REPOSITORY}.git
