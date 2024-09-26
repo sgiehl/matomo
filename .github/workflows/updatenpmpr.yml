@@ -28,7 +28,7 @@ jobs:
       if: ${{ steps.dependabot-metadata.outputs.package-ecosystem == 'npm_and_yarn' && steps.dependabot-metadata.outputs.dependency-type == 'direct:production' }}
       with:
         ref: ${{ github.head_ref }}
-        submodule: false
+        submodules: false
         lfs: false
         persist-credentials: false
     - name: Prepare Git
