@@ -21,13 +21,18 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.user.login == 'dependabot[bot]'
     steps:
+    - name: Dependabot metadata
+      id: dependabot-metadata
+      uses: dependabot/fetch-metadata@v2
     - uses: actions/checkout@v4
+      if: ${{ steps.dependabot-metadata.outputs.package-ecosystem == 'npm' }}
       with:
         ref: ${{ github.head_ref }}
         submodule: false
         lfs: false
         persist-credentials: false
     - name: Prepare Git
+      if: ${{ steps.dependabot-metadata.outputs.package-ecosystem == 'npm' }}
       run: |
           cat <<- EOF > $HOME/.netrc
             machine github.com
@@ -45,8 +50,10 @@ jobs:
 
           git remote add upstream https://github.com/${GITHUB_REPOSITORY}.git
     - name: Install npm dependencies
+      if: ${{ steps.dependabot-metadata.outputs.package-ecosystem == 'npm' }}
       run: npm install --omit=dev
     - name: Push changes
+      if: ${{ steps.dependabot-metadata.outputs.package-ecosystem == 'npm' }}
       run: |
           git add ./node_modules
           git commit -m "Update npm dependencies"
