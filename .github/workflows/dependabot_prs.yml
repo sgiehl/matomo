@@ -1,4 +1,4 @@
-name: Update committed npm files
+name: Handle DependaBot PRs
 
 on:
   pull_request:
@@ -16,8 +16,8 @@ permissions:
   statuses: none
 
 jobs:
-  build:
-
+  handle_npm_update:
+    name: Handle NPM dependency updates for production packages
     runs-on: ubuntu-latest
     if: github.event.pull_request.user.login == 'dependabot[bot]'
     steps:
