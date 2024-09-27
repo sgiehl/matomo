@@ -25,14 +25,14 @@ jobs:
       id: dependabot-metadata
       uses: dependabot/fetch-metadata@v2
     - uses: actions/checkout@v4
-      if: ${{ steps.dependabot-metadata.outputs.package-ecosystem == 'npm_and_yarn' && steps.dependabot-metadata.outputs.dependency-type == 'direct:production' }}
+      if: ${{ steps.dependabot-metadata.outputs.package-ecosystem == 'npm_and_yarn' }}
       with:
         ref: ${{ github.head_ref }}
         submodules: false
         lfs: false
         persist-credentials: false
     - name: Prepare Git
-      if: ${{ steps.dependabot-metadata.outputs.package-ecosystem == 'npm_and_yarn' && steps.dependabot-metadata.outputs.dependency-type == 'direct:production' }}
+      if: ${{ steps.dependabot-metadata.outputs.package-ecosystem == 'npm_and_yarn' }}
       run: |
           cat <<- EOF > $HOME/.netrc
             machine github.com
@@ -47,10 +47,10 @@ jobs:
 
           git remote add upstream https://github.com/${GITHUB_REPOSITORY}.git
     - name: Install npm dependencies
-      if: ${{ steps.dependabot-metadata.outputs.package-ecosystem == 'npm_and_yarn' && steps.dependabot-metadata.outputs.dependency-type == 'direct:production' }}
+      if: ${{ steps.dependabot-metadata.outputs.package-ecosystem == 'npm_and_yarn' }}
       run: npm install --omit=dev
     - name: Push changes if needed
-      if: ${{ steps.dependabot-metadata.outputs.package-ecosystem == 'npm_and_yarn' && steps.dependabot-metadata.outputs.dependency-type == 'direct:production' }}
+      if: ${{ steps.dependabot-metadata.outputs.package-ecosystem == 'npm_and_yarn' }}
       run: |
           changes=( $(git diff node_modules) )
 
