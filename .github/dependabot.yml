@@ -14,7 +14,9 @@ updates:
     pull-request-branch-name:
       separator: "-"
     versioning-strategy: lockfile-only
-    
+    allow:
+      - dependency-type: "all"
+
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
@@ -33,6 +35,8 @@ updates:
     pull-request-branch-name:
       separator: "-"    
     versioning-strategy: lockfile-only
+    allow:
+      - dependency-type: "all"
            
   - package-ecosystem: "npm"
     directory: "/tests/lib/screenshot-testing"
@@ -52,6 +56,8 @@ updates:
     pull-request-branch-name:
       separator: "-"    
     versioning-strategy: lockfile-only
+    allow:
+      - dependency-type: "all"
            
   - package-ecosystem: "github-actions"
     directory: "/"
