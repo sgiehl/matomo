@@ -7,6 +7,10 @@ updates:
       day: "sunday"
     labels:
       - "dependencies"
+    groups:
+      all-dependencies:
+        patterns:
+         - "*"
     commit-message:
       prefix: "[Composer] "
     reviewers:
