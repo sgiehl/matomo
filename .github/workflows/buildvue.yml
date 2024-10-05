@@ -127,7 +127,7 @@ jobs:
           BRANCH_NAME: ${{ steps.vars.outputs.branch }}
         if: steps.vars.outputs.branch != '' && steps.vuecheck.outputs.vue_modified == '1'
       - name: Build Vue Modules
-        run: php ./console vue:build
+        run: NODE_OPTIONS='--openssl-legacy-provider' php ./console vue:build
         if: steps.vars.outputs.branch != '' && steps.vuecheck.outputs.vue_modified == '1'
       - name: Push changes
         id: push
