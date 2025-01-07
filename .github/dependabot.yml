@@ -1,5 +1,26 @@
 version: 2
 updates:
+  - package-ecosystem: "composer"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+    labels:
+      - "dependencies"
+    groups:
+      all-dependencies:
+        patterns:
+         - "*"
+    commit-message:
+      prefix: "[Composer] "
+    reviewers:
+      - "sgiehl"
+    pull-request-branch-name:
+      separator: "-"
+    versioning-strategy: lockfile-only
+    allow:
+      - dependency-type: "all"
+
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
