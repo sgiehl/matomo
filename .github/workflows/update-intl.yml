@@ -100,7 +100,7 @@ jobs:
         id: push
         run: |
           cd $GITHUB_WORKSPACE
-          git diff --numstat plugins/Intl/lang/*.json
+          git diff
           if [[ $( git diff --numstat plugins/Intl/lang/*.json ) ]]
           then
             git add plugins/Intl/lang/*.json
