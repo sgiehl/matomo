@@ -99,6 +99,7 @@ jobs:
       - name: Push changes
         id: push
         run: |
+          git diff --numstat plugins/Intl/lang/*.json
           if [[ $( git diff --numstat plugins/Intl/lang/*.json ) ]]
           then
             cd $GITHUB_WORKSPACE
